@@ -1,0 +1,34 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url('media/vlm_01/fon_beton.png');
+    background-size: cover;
+    background-repeat: repeat;
+    background-position: center;
+}
+
+.login-container {
+    width: 30%;
+    margin: auto;
+    text-align: center;
+    padding-top: 50px;
+}
+
+.welcome-container {
+    background-color: green;
+    color: white;
+    text-align: center;
+    padding: 50px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.buttons img {
+    width: 200px;
+    height: 100px;
+}
