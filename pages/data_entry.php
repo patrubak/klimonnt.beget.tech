@@ -11,75 +11,26 @@ body {
     padding: 0;
 }
 
-header {
-    width: 100%;
-    position: relative;
-}
+header {    width: 100%;    position: relative;}
 
-.current-time {
-    position: absolute;
-    top: 10px;
-    left: 35px;
-    color: white;
-    font-size: 16px;
-    z-index: 1000;
-}
+.current-time {    position: absolute;    top: 10px;    left: 35px;    color: white;    font-size: 16px;    z-index: 1000;}
 
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.4);
-}
+.modal {    display: none;    position: fixed;    z-index: 1;    left: 0;    top: 0;    width: 100%;    height: 100%;    overflow: auto;    background-color: rgba(0, 0, 0, 0.4);}
 
-.modal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-}
+.modal-content {    background-color: #fefefe;    margin: 15% auto;    padding: 20px;    border: 1px solid #888;    width: 80%;}
 
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
+.close {    color: #aaa;    float: right;    font-size: 28px;    font-weight: bold;}
 
-.close:hover,
-.close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-}
+.close:hover,.close:focus {    color: black;    text-decoration: none;    cursor: pointer;}
 
-.success-message {
-    color: green;
-    font-weight: bold;
-    text-align: center;
-}
+.success-message {    color: green;    font-weight: bold;    text-align: center;}
 
-.button-link img {
-    max-width: 5%;
-}
+.button-link img {    max-width: 5%;}
 
-.button-link {
-    position: relative;
-    top: -200px;
-}
+.button-link {    position: relative;    top: -200px;}
 
-.return-home-btn {
-    position: absolute;
-    bottom: 1cm;
-    right: 0;
-}
-</style>
+.return-home-btn {    position: absolute;    bottom: 1cm;    right: 0;}</style>
+
 </head>
 <body>
 <!-- Шапка сайта -->
@@ -106,69 +57,88 @@ header {
     <a href="#" id="openRdListModalBtn" class="button-link">
         <img src="../media/vlm_01/knp_lst_n.png" alt="Добавить лист РД">
     </a>
-    
-    <!-- Новая кнопка для теста подключения -->
-    <a href="test_connection.php" id="testConnectionBtn" class="button-link">
-        <img src="../media/ver.3/knp_test1.png" alt="Тестирование подключения">
-    </a>
 
-    <!-- Модальное окно для добавления договора -->
-    <div id="contractModal" class="modal">
-        <div class="modal-content">
-            <span class="close">×</span>
-            <h2>Добавить договор</h2>
-            <form action="add_contract.php" method="post">
-                <label for="contract_number">Номер договора:</label><br>
-                <input type="text" id="contract_number" name="contract_number" required><br>
-                <label for="date">Дата заключения:</label><br>
-                <input type="date" id="date" name="date" required><br>
-                <button type="submit">Добавить договор</button>
-            </form>
-        </div>
+<!-- Кнопка для тестирования подключения -->
+<a href="#" id="testConnectionBtn" onclick="testCloudConnection()" class="button-link">
+    <img src="../media/ver.3/knp_test1.png" alt="Тестирование подключения">
+</a>
+
+<!-- Новое: кнопка для отправки файла -->
+<a href="#" id="uploadFileBtn" class="button-link">
+    <img src="../media/vlm_01/knp_upld_n.png" alt="Прикрепить файл">
+</a>
+
+<!-- Модальное окно для добавления договора -->
+<div id="contractModal" class="modal">
+    <div class="modal-content">
+        <span class="close">×</span>
+        <h2>Добавить договор</h2>
+        <form action="add_contract.php" method="post">
+            <label for="contract_number">Номер договора:</label><br>
+            <input type="text" id="contract_number" name="contract_number" required><br>
+            <label for="date">Дата заключения:</label><br>
+            <input type="date" id="date" name="date" required><br>
+            <button type="submit">Добавить договор</button>
+        </form>
     </div>
+</div>
 
-    <!-- Модальное окно для добавления титула -->
-    <div id="titleModal" class="modal">
-        <div class="modal-content">
-            <span class="close">×</span>
-            <h2>Добавить титул</h2>
-            <form action="add_title.php" method="post">
-                <label for="contract_id">Выберите договор:</label><br>
-                <select name="contract_id" required>
-                    <option value="">-- Выберите договор --</option>
-                    <?php include 'list_contracts.php'; ?>
-                </select><br>
-                <label for="title_name">Название титула:</label><br>
-                <input type="text" id="title_name" name="title_name" required><br>
-                <label for="title_description">Краткое описание титула:</label><br>
-                <textarea id="title_description" name="title_description" rows="4" cols="50" required></textarea><br>
-                <label for="title_detailed_desc">Подробное описание титула:</label><br>
-                <textarea id="title_detailed_desc" name="title_detailed_desc" rows="4" cols="50"></textarea><br>
-                <button type="submit">Добавить титул</button>
-            </form>
-        </div>
+<!-- Модальное окно для добавления титула -->
+<div id="titleModal" class="modal">
+    <div class="modal-content">
+        <span class="close">×</span>
+        <h2>Добавить титул</h2>
+        <form action="add_title.php" method="post">
+            <label for="contract_id">Выберите договор:</label><br>
+            <select name="contract_id" required>
+                <option value="">-- Выберите договор --</option>
+                <?php include 'list_contracts.php'; ?>
+            </select><br>
+            <label for="title_name">Название титула:</label><br>
+            <input type="text" id="title_name" name="title_name" required><br>
+            <label for="title_description">Краткое описание титула:</label><br>
+            <textarea id="title_description" name="title_description" rows="4" cols="50" required></textarea><br>
+            <label for="title_detailed_desc">Подробное описание титула:</label><br>
+            <textarea id="title_detailed_desc" name="title_detailed_desc" rows="4" cols="50"></textarea><br>
+            <button type="submit">Добавить титул</button>
+        </form>
     </div>
+</div>
 
-    <!-- Модальное окно для добавления раздела -->
-    <div id="sectionModal" class="modal">
-        <div class="modal-content">
-            <span class="close">×</span>
-            <h2>Добавить раздел</h2>
-            <form action="add_section.php" method="post">
-                <label for="title_id">Титул:</label><br>
-                <select name="title_id" required>
-                    <option value="">-- Выберите титул --</option>
-                    <?php include 'list_titles.php'; ?>
-                </select><br>
-                <label for="section_name">Название раздела:</label><br>
-                <input type="text" id="section_name" name="section_name" required><br>
-                <label for="section_code">Шифр раздела:</label><br>
-                <input type="text" id="section_code" name="section_code" required><br>
-                <label for="section_description">Описание раздела:</label><br>
-                <textarea id="section_description" name="section_description" rows="4" cols="50"></textarea><br>
-                <button type="submit">Добавить раздел</button>
-            </form>
-        </div>
+<!-- Модальное окно для добавления раздела -->
+<div id="sectionModal" class="modal">
+    <div class="modal-content">
+        <span class="close">×</span>
+        <h2>Добавить раздел</h2>
+        <form action="add_section.php" method="post">
+            <label for="title_id">Титул:</label><br>
+            <select name="title_id" required>
+                <option value="">-- Выберите титул --</option>
+                <?php include 'list_titles.php'; ?>
+            </select><br>
+            <label for="section_name">Название раздела:</label><br>
+            <input type="text" id="section_name" name="section_name" required><br>
+            <label for="section_code">Шифр раздела:</label><br>
+            <input type="text" id="section_code" name="section_code" required><br>
+            <label for="section_description">Описание раздела:</label><br>
+            <textarea id="section_description" name="section_description" rows="4" cols="50"></textarea><br>
+            <button type="submit">Добавить раздел</button>
+        </form>
+    </div>
+</div>
+
+
+<!-- Модальное окно для отправки файла -->
+<div id="uploadFormModal" class="modal">
+    <div class="modal-content">
+        <span class="close">×</span>
+        <h2>Отправить файл на облако</h2>
+        <form action="upload_file.php" method="post" enctype="multipart/form-data">
+            <label for="uploaded_file">Выберите файл:</label><br>
+            <input type="file" id="uploaded_file" name="uploaded_file" required><br>
+            <button type="submit">Загрузить файл</button>
+        </form>
+    </div>
 </div>
 
 <!-- Модальное окно для добавления листа РД -->
@@ -229,59 +199,68 @@ function updateCurrentTime() {
     document.getElementById('currentTime').innerHTML = `${hours}:${minutes}:${seconds}`;
 }
 
-setInterval(updateCurrentTime, 1000); // Обновляем каждые секунды
+setInterval(updateCurrentTime, 1000); // Обновляем каждую секунду
 updateCurrentTime(); // Первоначальная инициализация
 </script>
 
 <!-- Скрипты для обработки кнопок -->
 <script>
 document.addEventListener('DOMContentLoaded', () => {
+    // Обработчики модальных окон
     const modalButtons = [
         { buttonId: 'openContractModalBtn', modalId: 'contractModal' },
         { buttonId: 'openTitleModalBtn', modalId: 'titleModal' },
         { buttonId: 'openSectionModalBtn', modalId: 'sectionModal' },
         { buttonId: 'openRdListModalBtn', modalId: 'rdListModal' },
-        { buttonId: 'testConnectionBtn', modalId: '' } // Специальная кнопка для тестирования подключения
+        { buttonId: 'uploadFileBtn', modalId: 'uploadFormModal' }, // Новый элемент для отправки файла
     ];
 
     modalButtons.forEach(buttonInfo => {
         const btn = document.getElementById(buttonInfo.buttonId);
         if (btn) {
-            if (buttonInfo.modalId !== '') {
-                const modal = document.getElementById(buttonInfo.modalId);
-                if (modal) {
-                    btn.onclick = function(event) {
-                        event.preventDefault();
-                        showModal(modal);
-                    };
-
-                    modal.querySelector('.close').onclick = function() {
-                        hideModal(modal);
-                    };
-                } else {
-                    console.error(`Модальное окно "${buttonInfo.modalId}" не найдено.`);
-                }
-            } else {
-                // Обработчик специальной кнопки
+            const modal = document.getElementById(buttonInfo.modalId);
+            if (modal) {
                 btn.onclick = function(event) {
                     event.preventDefault();
-                    window.location.href = 'test_connection.php';
+                    showModal(modal);
                 };
+
+                modal.querySelector('.close').onclick = function() {
+                    hideModal(modal);
+                };
+            } else {
+                console.error(`Модальное окно "${buttonInfo.modalId}" не найдено.`);
             }
         } else {
             console.error(`Кнопка "${buttonInfo.buttonId}" не найдена.`);
         }
     });
+
+    // Тестирование подключения к облаку
+    const testCloudConnection = async () => {
+        try {
+            const response = await fetch('test_connection.php');
+            if (!response.ok) throw new Error(response.statusText);
+        
+            const result = await response.json(); // Парсим ответ как JSON
+            alert(result.message); // Сообщение пользователю
+        } catch (err) {
+            alert("Ошибка при проверке подключения к облаку: " + err.message);
+        }
+    };
+
+    // Присваиваем обработчик нашей специальной кнопке
+    document.getElementById('testConnectionBtn').onclick = testCloudConnection;
+
+    // Функции для показа и скрытия модальных окон
+    const showModal = modal => {
+        modal.style.display = 'block';
+    };
+
+    const hideModal = modal => {
+        modal.style.display = 'none';
+    };
 });
-
-// Функции для показа и скрытия модальных окон
-const showModal = modal => {
-    modal.style.display = 'block';
-};
-
-const hideModal = modal => {
-    modal.style.display = 'none';
-};
 </script>
 </body>
-</html>
+</html> 
